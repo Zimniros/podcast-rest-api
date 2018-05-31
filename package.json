@@ -1,8 +1,7 @@
 {
   "name": "podcast-tune-rest-api",
   "version": "1.0.0",
-  "description":
-    "Api that takes care about fetching, storing and caching data from iTunes and individual feeds",
+  "description": "Api that takes care about fetching, storing and caching data from iTunes and individual feeds",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -22,6 +21,7 @@
     "node": "8.11.1"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "body-parser": "^1.18.3",
     "express": "^4.16.3",
     "mongoose": "^5.1.3"
