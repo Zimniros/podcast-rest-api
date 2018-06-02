@@ -19,6 +19,7 @@ const { Genres } = require("./api/models/genreModel");
 const Episode = require("./api/models/episodeModel");
 const { Podcast } = require("./api/models/podcastModel");
 const Pair = require("./api/models/pairModel");
+require("./api/schedules/index");
 
 mongoose.Promise = global.Promise;
 mongoose.connect(mongo_uri);
