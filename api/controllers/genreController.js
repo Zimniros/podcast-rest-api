@@ -26,6 +26,6 @@ exports.getPreviews = async (req, res) => {
       error: `Recieved genreId equal to ${genreId}. Parameter should be a number`
     });
   }
-  const data = await fetchPreviews(genreId);
-  res.send({ data });
+  const previews = await fetchPreviews(genreId);
+  res.send({ previews });
 };
