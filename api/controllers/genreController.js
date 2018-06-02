@@ -27,5 +27,5 @@ exports.getPreviews = async (req, res) => {
     });
   }
   const data = await fetchPreviews(genreId);
-  res.send(data);
+  res.send({ data });
 };
