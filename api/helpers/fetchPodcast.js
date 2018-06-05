@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const axios = require("axios");
+const { find } = require("lodash");
 const X2JS = require("x2js");
 const getPodcastFeedUrl = require("./../helpers/getPodcastFeedUrl");
 
@@ -18,6 +19,7 @@ async function getData(podcastId) {
     website: getWebsite(json),
     description: getDescription(json),
     summary: getSummary(json),
+    artwork: getArtwork(json),
     episodes: getEpisodes(json)
   };
 }
@@ -80,6 +82,11 @@ function getPubDate(data) {
 
 function getLinkToEpisode(data) {
   return data.link;
+}
+
+function getArtwork(data) {
+  const href = find(data.image, "_href");
+  return href ? href["_href"] : find(data.image, "url").url;
 }
 
 /*
