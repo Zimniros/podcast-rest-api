@@ -1,10 +1,10 @@
 const env = process.env.NODE_ENV || "development";
 
 if (env === "development") {
-  process.env.PORT = 3000;
+  process.env.PORT = 4000;
   process.env.MONGO_URI = "mongodb://localhost/Podcast";
 } else if (env === "test") {
-  process.env.PORT = 3001;
+  process.env.PORT = 4001;
   process.env.MONGO_URI = "mongodb://localhost/PodcastTest";
 }
 
@@ -18,7 +18,7 @@ const mongo_uri = process.env.MONGO_URI;
 const { Genres } = require("./api/models/genreModel");
 const Episode = require("./api/models/episodeModel");
 const { Podcast } = require("./api/models/podcastModel");
-const Pair = require("./api/models/pairModel");
+const { Pair } = require("./api/models/pairModel");
 require("./api/schedules/index");
 
 mongoose.Promise = global.Promise;

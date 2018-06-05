@@ -26,10 +26,6 @@ const EpisodeSchema = new Schema({
   mediaUrl: {
     type: String,
     required: true
-  },
-  duration: {
-    type: String,
-    required: true
   }
 });
 

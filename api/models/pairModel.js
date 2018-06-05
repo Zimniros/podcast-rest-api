@@ -11,5 +11,6 @@ const PairSchema = new Schema({
     required: true
   }
 });
+const Pairs = mongoose.model("Pairs", PairSchema);
 
-module.exports = mongoose.model("Pairs", PairSchema);
+module.exports = { Pairs };

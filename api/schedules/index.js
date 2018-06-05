@@ -3,13 +3,13 @@ const mongoose = require("mongoose");
 const Genres = mongoose.model("Genres");
 const fetchGenres = require("./../helpers/fetchGenres");
 
-const j = schedule.scheduleJob("*/1 * * * *", () => {
-  updateGenresCollection();
-});
+// const j = schedule.scheduleJob("*/1 * * * *", () => {
+//   updateGenresCollection();
+// });
 
-async function updateGenresCollection() {
-  const genres = await fetchGenres();
-  await Genres.remove({}).then(() => {
-    Genres.insertMany(genres);
-  });
-}
+// async function updateGenresCollection() {
+//   const genres = await fetchGenres();
+//   await Genres.remove({}).then(() => {
+//     Genres.insertMany(genres);
+//   });
+// }

@@ -1,29 +1,16 @@
 const mongoose = require("mongoose");
 const Podcasts = mongoose.model("Podcasts");
-const getPodcastFeedUrl = require("./../helpers/getPodcastFeedUrl");
+const fetchPodcast = require("./../helpers/fetchPodcast");
 
-exports.getPodcastById = (req, res) => {
-  const id = req.params.podcastId;
-  Podcasts.findOne({ id })
-    .then(podcast => {
-      if (!podcast) {
-        return getPodcastFeedUrl(id)
-          .then(feedUrl => {
-            if (feedUrl) {
-              return res.status(200).send({ feedUrl });
-            }
-            return res.status(400).send({ feedUrl: "Nothing was found" });
-          })
-          .catch(e => {
-            res.status(400).send();
-          });
+exports.getPodcastById = async (req, res) => {
+  const { podcastId } = req.params;
 
-        return res.status(404).send();
-      }
-
-      res.status(201).send(podcast);
-    })
-    .catch(e => {
-      res.status(400).send();
+  if (isNaN(podcastId)) {
+    return res.status(400).send({
+      error: `Recieved podcastId equal to ${podcastId}. Parameter should be a number`
     });
+  }
+
+  const data = await fetchPodcast(podcastId);
+  res.send({ data });
 };

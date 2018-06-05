@@ -3,20 +3,24 @@ const axios = require("axios");
 const Pairs = mongoose.model("Pairs");
 
 module.exports = podcastId => {
-  return Pairs.findOne({ podcastId }).then(pair => {
-    if (!pair) {
-      return fetchFeedUrl(podcastId).then(podcastFeedUrl => {
-        if (podcastFeedUrl) {
-          Pairs.create({
-            podcastId,
-            podcastFeedUrl
-          });
-          return podcastFeedUrl;
-        }
-      });
-    }
-    return pair.podcastFeedUrl;
-  });
+  return Pairs.findOne({ podcastId })
+    .then(pair => {
+      if (!pair) {
+        return fetchFeedUrl(podcastId).then(async podcastFeedUrl => {
+          if (podcastFeedUrl) {
+            await Pairs.create({
+              podcastId,
+              podcastFeedUrl
+            });
+            return podcastFeedUrl;
+          }
+        });
+      }
+      return pair.podcastFeedUrl;
+    })
+    .catch(e => {
+      console.log("inside getPodcastFeedUrl catch", e);
+    });
 };
 
 function fetchFeedUrl(podcastId) {
