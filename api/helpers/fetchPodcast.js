@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const axios = require("axios");
-const { find } = require("lodash");
+const { find, filter } = require("lodash");
 const X2JS = require("x2js");
 const getPodcastFeedUrl = require("./../helpers/getPodcastFeedUrl");
 
@@ -85,8 +85,12 @@ function getLinkToEpisode(data) {
 }
 
 function getArtwork(data) {
-  const href = find(data.image, "_href");
-  return href ? href["_href"] : find(data.image, "url").url;
+  const imgObj = Array.isArray(data.image) ? data.image : [data.image];
+  const result = find(
+    imgObj,
+    o => o.hasOwnProperty("_href") || o.hasOwnProperty("url")
+  );
+  return result["url"] || result["_href"];
 }
 
 /*
