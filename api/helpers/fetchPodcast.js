@@ -11,6 +11,7 @@ module.exports = async podcastId => {
 async function getData(podcastId) {
   const feedUrl = await getPodcastFeedUrl(podcastId);
   const json = await parseFeed(feedUrl);
+  // return json;
   return {
     podcastId,
     feedUrl,
@@ -49,11 +50,11 @@ function getWebsite(data) {
 }
 
 function getDescription(data) {
-  return getStringfromArray(data.description);
+  if (data.description) return getStringfromArray(data.description);
 }
 
 function getSummary(data) {
-  return data.summary.toString();
+  if (data.summary) return data.summary.toString();
 }
 
 function getEpisodes(data) {
