@@ -63,6 +63,7 @@ function getEpisodes(data) {
       return {
         title: getStringfromArray(episode.title),
         description: getDescription(episode),
+        author: getAuthor(data),
         mediaUrl: getMediaUrl(episode),
         pubDate: getPubDate(episode),
         linkToEpisode: getLinkToEpisode(episode)
