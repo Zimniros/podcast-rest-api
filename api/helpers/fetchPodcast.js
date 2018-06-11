@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const {ObjectId} = mongoose.Types;
 const axios = require("axios");
 const { find, filter } = require("lodash");
 const X2JS = require("x2js");
@@ -61,6 +62,7 @@ function getEpisodes(data) {
   return data.item.map(episode => {
     try {
       return {
+        id: new ObjectId,
         title: getStringfromArray(episode.title),
         description: getDescription(episode),
         author: getAuthor(data),
