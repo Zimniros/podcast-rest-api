@@ -1,8 +1,6 @@
 const mongoose = require("mongoose");
 const axios = require("axios");
 const { values, pick } = require("lodash");
-const Genres = mongoose.model("Genres");
-const fs = require("fs");
 
 module.exports = async () => {
   return await getData();

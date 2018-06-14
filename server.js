@@ -16,10 +16,7 @@ const app = express();
 const port = process.env.PORT;
 const mongo_uri = process.env.MONGO_URI;
 const { Genres } = require("./api/models/genreModel");
-const Episode = require("./api/models/episodeModel");
-const { Podcast } = require("./api/models/podcastModel");
-const { Pair } = require("./api/models/pairModel");
-require("./api/schedules/index");
+const { ItunesPreviews } = require("./api/models/ItunesPreviewModel");
 
 mongoose.Promise = global.Promise;
 mongoose.connect(mongo_uri);

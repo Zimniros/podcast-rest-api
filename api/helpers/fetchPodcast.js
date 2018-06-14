@@ -1,28 +1,28 @@
 const mongoose = require("mongoose");
-const {ObjectId} = mongoose.Types;
+const { ObjectId } = mongoose.Types;
 const axios = require("axios");
-const { find, filter } = require("lodash");
+const { filter } = require("lodash");
 const X2JS = require("x2js");
-const getPodcastFeedUrl = require("./../helpers/getPodcastFeedUrl");
+const getPodcastItunesPreview = require("../helpers/getPodcastItunesPreview");
 
 module.exports = async podcastId => {
   return await getData(podcastId);
 };
 
 async function getData(podcastId) {
-  const feedUrl = await getPodcastFeedUrl(podcastId);
-  const json = await parseFeed(feedUrl);
-  // return json;
+  const itunesPreview = await getPodcastItunesPreview(podcastId);
+  const json = await parseFeed(itunesPreview.feedUrl);
+
   return {
-    podcastId,
-    feedUrl,
-    title: getTitle(json),
-    author: getAuthor(json),
+    ...itunesPreview,
     website: getWebsite(json),
     description: getDescription(json),
     summary: getSummary(json),
-    artwork: getArtwork(json),
-    episodes: getEpisodes(json)
+    episodes: getEpisodes(
+      json,
+      itunesPreview.podcastId,
+      itunesPreview.artworkUrl
+    )
   };
 }
 
@@ -36,10 +36,6 @@ function parseFeed(feedUrl) {
 function xml2json(xml) {
   const x2js = new X2JS();
   return x2js.xml2js(xml);
-}
-
-function getTitle(data) {
-  return data.title;
 }
 
 function getAuthor(data) {
@@ -58,11 +54,13 @@ function getSummary(data) {
   if (data.summary) return data.summary.toString();
 }
 
-function getEpisodes(data) {
+function getEpisodes(data, podcastId, podcastArtworkUrl) {
   return data.item.map(episode => {
     try {
       return {
-        id: new ObjectId,
+        id: new ObjectId(),
+        podcastId,
+        podcastArtworkUrl,
         title: getStringfromArray(episode.title),
         description: getDescription(episode),
         author: getAuthor(data),
@@ -86,15 +84,6 @@ function getPubDate(data) {
 
 function getLinkToEpisode(data) {
   return data.link;
-}
-
-function getArtwork(data) {
-  const imgObj = Array.isArray(data.image) ? data.image : [data.image];
-  const result = find(
-    imgObj,
-    o => o.hasOwnProperty("_href") || o.hasOwnProperty("url")
-  );
-  return result["url"] || result["_href"];
 }
 
 /*

@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const Podcasts = mongoose.model("Podcasts");
 const fetchPodcast = require("./../helpers/fetchPodcast");
 
 exports.getPodcastById = async (req, res) => {

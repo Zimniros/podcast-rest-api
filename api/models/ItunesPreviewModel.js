@@ -1,9 +1,13 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const EpisodeSchema = new Schema({
+const ItunesPreviewSchema = new Schema({
   podcastId: {
     type: Number,
+    required: true
+  },
+  feedUrl: {
+    type: String,
     required: true
   },
   title: {
@@ -11,22 +15,15 @@ const EpisodeSchema = new Schema({
     required: true,
     minlength: 1
   },
-  linkToEpisode: {
+  author: {
     type: String,
-    required: true,
-    minlength: 1
-  },
-  pubDate: {
-    type: Date,
     required: true
   },
-  description: {
-    type: String
-  },
-  mediaUrl: {
+  artworkUrl: {
     type: String,
     required: true
   }
 });
+const ItunesPreviews = mongoose.model("ItunesPreviews", ItunesPreviewSchema);
 
-module.exports = mongoose.model("Episodes", EpisodeSchema);
+module.exports = { ItunesPreviews };
