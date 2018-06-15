@@ -11,6 +11,7 @@ if (env === "development") {
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
+const cache = require("memory-cache");
 
 const app = express();
 const port = process.env.PORT;
@@ -23,6 +24,25 @@ mongoose.connect(mongo_uri);
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+
+let memCache = new cache.Cache();
+exports.cacheMiddleware = duration => {
+  return (req, res, next) => {
+    let key = "__express__" + req.originalUrl || req.url;
+    let cacheContent = memCache.get(key);
+    if (cacheContent) {
+      res.send(cacheContent);
+      return;
+    } else {
+      res.sendResponse = res.send;
+      res.send = body => {
+        memCache.put(key, body, duration * 1000);
+        res.sendResponse(body);
+      };
+      next();
+    }
+  };
+};
 
 // routes declaration
 const routes = require("./api/routes/routes");
