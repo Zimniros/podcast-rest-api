@@ -2,7 +2,11 @@ const axios = require("axios");
 
 module.exports = term => {
   return axios
-    .get(`https://itunes.apple.com/search?term=${term}&entity=podcast&limit=20`)
+    .get(
+      `https://itunes.apple.com/search?term=${encodeURIComponent(
+        term
+      )}&entity=podcast&limit=20`
+    )
     .then(res => {
       const { resultCount, results } = res.data;
       if (resultCount === 0) {

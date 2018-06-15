@@ -9,6 +9,6 @@ exports.getSearchResults = async (req, res) => {
     });
   }
 
-  const data = await doLookup(term);
+  const data = await doLookup(term.split(" ").join("-"));
   res.send({ data });
 };
