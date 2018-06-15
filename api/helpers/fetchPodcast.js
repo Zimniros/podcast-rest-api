@@ -65,6 +65,7 @@ function getEpisodes(data, podcastId, podcastArtworkUrl) {
         description: getDescription(episode),
         author: getAuthor(data),
         mediaUrl: getMediaUrl(episode),
+        duration: getDuration(episode),
         pubDate: getPubDate(episode),
         linkToEpisode: getLinkToEpisode(episode)
       };
@@ -76,6 +77,10 @@ function getEpisodes(data, podcastId, podcastArtworkUrl) {
 
 function getMediaUrl(data) {
   return data.enclosure["_url"];
+}
+
+function getDuration(data) {
+  return data.duration.toString();
 }
 
 function getPubDate(data) {
