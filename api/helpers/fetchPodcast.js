@@ -80,7 +80,23 @@ function getMediaUrl(data) {
 }
 
 function getDuration(data) {
-  return data.duration.toString();
+  const duration = data.duration.toString();
+  const index = duration.indexOf(":");
+
+  return index === -1 ? parseInt(duration) : toSeconds(duration);
+}
+
+function toSeconds(time) {
+  let p = time.split(":"),
+    s = 0,
+    m = 1;
+
+  while (p.length > 0) {
+    s += m * parseInt(p.pop(), 10);
+    m *= 60;
+  }
+
+  return s;
 }
 
 function getPubDate(data) {
