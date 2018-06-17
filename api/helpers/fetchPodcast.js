@@ -55,7 +55,11 @@ function getSummary(data) {
 }
 
 function getEpisodes(data, podcastId, podcastArtworkUrl) {
-  return data.item.map(episode => {
+  const { item } = data;
+  if (!item) return null;
+
+  const episodes = Array.isArray(item) ? item : [item];
+  return episodes.map(episode => {
     try {
       return {
         id: new ObjectId(),
