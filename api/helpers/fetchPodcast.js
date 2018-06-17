@@ -84,6 +84,7 @@ function getMediaUrl(data) {
 }
 
 function getDuration(data) {
+  if (!data.duration) return null;
   const duration = data.duration.toString();
   const index = duration.indexOf(":");
 
