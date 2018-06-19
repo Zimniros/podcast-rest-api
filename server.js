@@ -12,6 +12,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const cache = require("memory-cache");
+const cors = require('cors')
 
 const app = express();
 const port = process.env.PORT;
@@ -22,6 +23,7 @@ const { ItunesPreviews } = require("./api/models/ItunesPreviewModel");
 mongoose.Promise = global.Promise;
 mongoose.connect(mongo_uri);
 
+app.use(cors())
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
