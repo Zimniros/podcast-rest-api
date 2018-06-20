@@ -5,7 +5,10 @@ const podcasts = require("./../controllers/podcastController");
 const server = require("./../../server");
 
 module.exports = app => {
-  app.route("/api/genres").get(genres.getGenres);
+  app
+    .route("/api/genres")
+    .all(server.cacheMiddleware(86400))
+    .get(genres.getGenres);
   app
     .route("/api/genres/:genreId")
     .all(server.cacheMiddleware(1800))
