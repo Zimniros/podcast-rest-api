@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 const { ObjectId } = mongoose.Types;
 const axios = require("axios");
-const { filter } = require("lodash");
 const X2JS = require("x2js");
 const getPodcastItunesPreview = require("../helpers/getPodcastItunesPreview");
 
@@ -11,6 +10,10 @@ module.exports = async podcastId => {
 
 async function getData(podcastId) {
   const itunesPreview = await getPodcastItunesPreview(podcastId);
+  if (!itunesPreview) {
+    return null;
+  }
+
   const json = await parseFeed(itunesPreview.feedUrl);
 
   return {

@@ -11,5 +11,11 @@ exports.getPodcastById = async (req, res) => {
   }
 
   const data = await fetchPodcast(podcastId);
+
+  if (!data) {
+    return res.status(404).send({
+      error: `Nothing was found.`
+    });
+  }
   res.send({ data });
 };
